@@ -33,7 +33,10 @@ gem 'jbuilder'
 
 # Templating
 gem 'slim', '~> 5.2.1'
-gem "slim-rails"
+gem 'slim-rails'
+
+# Authentication
+gem 'devise'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
