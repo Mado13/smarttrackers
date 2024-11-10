@@ -1,0 +1,28 @@
+= turbo_frame_tag "gauge_nav" do
+  = render "nav", gauge: @gauge
+
+.container.mx-auto.px-4.py-6
+  .bg-white.shadow.rounded-lg.overflow-hidden
+    .px-6.py-4.border-b.border-gray-200.flex.justify-between
+      h2.text-lg.font-medium.text-gray-900 Readings
+      - if current_user.employee?
+        = link_to new_gauge_reading_path(@gauge),
+          data: { turbo_frame: "modal_content" },
+          class: "inline-flex gap-4 justify-center items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" do
+          span Add Reading
+     
+    .overflow-hidden
+      = turbo_frame_tag "readings_content" do
+        - if @gauge.readings.any?
+          table.w-full.divide-y.divide-gray-200
+            thead.bg-gray-50
+              tr
+                th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Date
+                th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Value
+                th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Approved
+                th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Actions
+            tbody.bg-white.divide-y.divide-gray-200 id="readings"
+              = render @gauge.readings
+        - else
+          .text-center.py-12
+            p.text-gray-500.text-sm No readings found for this gauge.

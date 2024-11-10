@@ -1,16 +1,17 @@
-div[id="gauge_#{gauge.id}"]
-  .gauge-item.mb-4
-    .bg-white.shadow.rounded-lg.p-6
-      .flex.justify-between.items-center
-        h3.text-lg.font-semibold= gauge.name
-        .text-sm.text-gray-500= gauge.unit
-      .mt-2.grid.grid-cols-2.gap-4
-        .col-span-1
-          p.text-sm.text-gray-600 Start Date
-          p.font-medium= gauge.start_date.strftime("%B %d, %Y")
-        .col-span-1
-          p.text-sm.text-gray-600 End Date
-          p.font-medium= gauge.end_date.strftime("%B %d, %Y")
-        .col-span-2
-          p.text-sm.text-gray-600 Time Unit
-          p.font-medium.capitalize= gauge.time_unit
+= link_to gauge_path(gauge), class: "block group" do
+  div[id="gauge_#{gauge.id}"]
+    .gauge-item.mb-4
+      .bg-white.shadow.rounded-lg.p-6.transform.transition-all.duration-300.ease-in-out.group-hover:shadow-xl.group-hover:-translate-y-1.group-hover:border-indigo-100.border-2.border-transparent
+        .flex.justify-between.items-center
+          h3.text-lg.font-semibold.text-gray-900.group-hover:text-indigo-600= gauge.name
+          .text-sm.text-gray-500= gauge.unit
+        .mt-2.grid.grid-cols-2.gap-4
+          .col-span-1
+            p.text-sm.text-gray-600 Start Date
+            p.font-medium= gauge.start_date.strftime("%B %d, %Y")
+          .col-span-1
+            p.text-sm.text-gray-600 End Date
+            p.font-medium= gauge.end_date.strftime("%B %d, %Y")
+          .col-span-2
+            p.text-sm.text-gray-600 Time Unit
+            p.font-medium.capitalize= gauge.time_unit
