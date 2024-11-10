@@ -1,22 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe 'User login', type: :feature, js: true do
-  let(:user) { create(:user, email: 'test@example.com', password: 'password123', first_name: 'test', last_name: 'suite') }
+  let(:user) { create(:user) }
   
   before do
-    # Make sure the user is created before each test
     user
     visit new_user_session_path
   end
 
   context 'with valid credentials' do
     it 'signs user in successfully' do
-      # Using more specific field identifiers
       fill_in 'user[email]', with: user.email
-      fill_in 'user[password]', with: 'password123'
+      fill_in 'user[password]', with: user.password
       click_button 'Log in'
       
-      # Add a small wait to ensure redirect completes
       expect(page).to have_current_path(root_path, wait: 5)
     end
   end
@@ -27,8 +24,7 @@ RSpec.describe 'User login', type: :feature, js: true do
       fill_in 'user[password]', with: 'wrongpassword'
       click_button 'Log in'
       
-      # Using Devise's default error message wrapper
-      expect(page).to have_content('Invalid email or password')
+      expect(page).to have_content('Invalid Email or password')
       expect(page).to have_current_path(new_user_session_path, wait: 5)
     end
 
@@ -38,7 +34,7 @@ RSpec.describe 'User login', type: :feature, js: true do
       click_button 'Log in'
       
       
-      expect(page).to have_content('Invalid email or password')
+      expect(page).to have_content('Invalid Email or password')
       expect(page).to have_current_path(new_user_session_path, wait: 5)
     end
   end
