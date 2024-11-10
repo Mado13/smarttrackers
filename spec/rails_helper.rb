@@ -55,6 +55,13 @@ RSpec.configure do |config|
     Capybara.current_driver = :selenium_chrome_headless
   end
 
+  config.before(:suite) do
+    Rails.application.load_tasks
+    unless config.use_transactional_fixtures?
+      Rake::Task['db:test:prepare'].execute
+    end
+  end
+
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
