@@ -16,30 +16,33 @@ class GaugesController < ApplicationController
 
   def new
     @gauge = Gauge.new
-    render turbo_stream: turbo_stream.replace(
-      'new_gauge_form',
-      partial: 'modals/gauge_form',
-      locals: { gauge: @gauge }
-    )
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update('new_gauge_form', partial: 'form')
+      end
+    end
   end
 
   def create
-    @gauge = Gauge.new(gauge_params) 
+    @gauge = Gauge.new(gauge_params)
     if @gauge.save
       render turbo_stream: [
         turbo_stream.append('gauges_list', partial: 'gauge', locals: { gauge: @gauge }),
-        turbo_stream.replace('new_gauge_form', partial: 'modals/gauge_form', locals: {gauge: @gauge}),
-        turbo_stream.prepend('flash_messages', partial: 'shared/flash', locals: {
-                               type: 'success',
-                               message: 'Gauge was successfully created.'
-                             })
+        turbo_stream.update('new_gauge_form', ''),
+        turbo_stream_flash_message('success', 'Gauge was successfully created.')
       ]
     else
-      render turbo_stream: turbo_stream.replace(
-        'new_gauge_form',
-        partial: 'modals/gauge_form',
-        locals: { gauge: @gauge }
-      ), status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update('modal_content',
+                                                   template: 'gauges/new',
+                                                   locals: { gauge: @gauge }),
+                 status: :unprocessable_entity
+        end
+      end
     end
   end
 
