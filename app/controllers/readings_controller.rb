@@ -11,12 +11,7 @@ class ReadingsController < ApplicationController
 
   def new
     @reading = @gauge.readings.build
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update('new_reading_form', partial: 'form')
-      end
-    end
+    render :new
   end
 
   def create
@@ -28,15 +23,7 @@ class ReadingsController < ApplicationController
         turbo_stream_flash_message('success', 'Reading was successfully created.')
       ]
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.update('modal_content',
-                                                   template: 'readings/new',
-                                                   locals: { gauge: @gauge, gauge_reading: @reading }),
-                 status: :unprocessable_entity
-        end
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 

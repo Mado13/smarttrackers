@@ -17,14 +17,6 @@ RSpec.describe 'Readings', type: :request do
         get new_gauge_reading_path(gauge, format: :html)
         expect(response).to have_http_status(:success)
       end
-
-      it 'returns successful turbo stream response' do
-        get new_gauge_reading_path(gauge),
-            headers: { 'Accept' => 'text/vnd.turbo-stream.html' },
-            xhr: true
-        expect(response).to have_http_status(:success)
-        expect(response.media_type).to eq Mime[:turbo_stream]
-      end
     end
 
     context 'when manager tries to access' do
@@ -104,13 +96,12 @@ RSpec.describe 'Readings', type: :request do
         expect(response).to have_http_status(:success)
       end
 
-     it 'fails to create with invalid params' do
-  post gauge_readings_path(gauge),
-       params: invalid_params,
-       headers: { 'Accept': 'text/vnd.turbo-stream.html' }
-       
-  expect(response).to have_http_status(:unprocessable_entity)  # Keep the 422 status
-end 
+      it 'fails to create with invalid params' do
+        post gauge_readings_path(gauge),
+             params: invalid_params
+
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
 
     context 'when manager tries to create' do
