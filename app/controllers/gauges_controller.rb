@@ -16,13 +16,7 @@ class GaugesController < ApplicationController
 
   def new
     @gauge = Gauge.new
-
-    respond_to do |format|
-      format.html
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.update('new_gauge_form', partial: 'form')
-      end
-    end
+    render :new
   end
 
   def create
@@ -34,15 +28,7 @@ class GaugesController < ApplicationController
         turbo_stream_flash_message('success', 'Gauge was successfully created.')
       ]
     else
-      respond_to do |format|
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.update('modal_content',
-                                                   template: 'gauges/new',
-                                                   locals: { gauge: @gauge }),
-                 status: :unprocessable_entity
-        end
-      end
+      render :new, status: :unprocessable_entity
     end
   end
 
