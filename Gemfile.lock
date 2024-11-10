@@ -118,6 +118,8 @@ GEM
     factory_bot_rails (6.4.4)
       factory_bot (~> 6.5)
       railties (>= 5.0.0)
+    faker (3.5.1)
+      i18n (>= 1.8.11, < 2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.6)
@@ -137,6 +139,8 @@ GEM
     loofah (2.23.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
+    lucide-rails (0.5.1)
+      railties (>= 4.1.0)
     mail (2.8.1)
       mini_mime (>= 0.1.1)
       net-imap
@@ -249,6 +253,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    shoulda-matchers (6.4.0)
+      activesupport (>= 5.2.0)
     slim (5.2.1)
       temple (~> 0.10.0)
       tilt (>= 2.1.0)
@@ -313,13 +319,16 @@ DEPENDENCIES
   debug
   devise
   factory_bot_rails
+  faker
   importmap-rails
   jbuilder
+  lucide-rails
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 7.1.5)
   rspec-rails (~> 7.0.0)
   selenium-webdriver
+  shoulda-matchers (~> 6.0)
   slim (~> 5.2.1)
   slim-rails
   sprockets-rails

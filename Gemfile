@@ -38,6 +38,9 @@ gem 'slim-rails'
 # Authentication
 gem 'devise'
 
+# icons
+gem 'lucide-rails'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -81,4 +84,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 7.0.0'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers', '~> 6.0'
+  gem 'faker'
 end
