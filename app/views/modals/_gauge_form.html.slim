@@ -1,0 +1,48 @@
+= turbo_frame_tag "new_gauge_form" do
+  = form_with model: @gauge,
+    class: "space-y-6 min-w-[30rem]",
+              data: { controller: "form", action: "turbo:submit-start->form#submitStart turbo:submit-end->form#submitEnd" } do |f|
+
+    .space-y-6
+      .field
+        = f.label :name, class: "block text-sm font-medium text-gray-700"
+        = f.text_field :name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@gauge.errors[:name].any? ? 'border-red-300' : ''}"
+        - if @gauge.errors[:name].any?
+          .text-red-600.text-xs.mt-1= @gauge.errors[:name].join(', ')
+
+      .field
+        = f.label :start_date, class: "block text-sm font-medium text-gray-700"
+        = f.date_field :start_date, 
+                      data: { modal_target: "startDate", action: "change->modal#updateEndDate" },
+                      class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@gauge.errors[:start_date].any? ? 'border-red-300' : ''}"
+        - if @gauge.errors[:start_date].any?
+          .text-red-600.text-xs.mt-1= @gauge.errors[:start_date].join(', ')
+
+      .field
+        = f.label :end_date, class: "block text-sm font-medium text-gray-700"
+        = f.date_field :end_date, 
+                      data: { modal_target: "endDate" },
+                      class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@gauge.errors[:end_date].any? ? 'border-red-300' : ''}"
+        - if @gauge.errors[:end_date].any?
+          .text-red-600.text-xs.mt-1= @gauge.errors[:end_date].join(', ')
+
+      .field
+        = f.label :unit, class: "block text-sm font-medium text-gray-700"
+        = f.select :unit, Gauge.units.keys, {}, 
+                  class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@gauge.errors[:unit].any? ? 'border-red-300' : ''}"
+        - if @gauge.errors[:unit].any?
+          .text-red-600.text-xs.mt-1= @gauge.errors[:unit].join(', ')
+
+      .field
+        = f.label :time_unit, class: "block text-sm font-medium text-gray-700"
+        = f.select :time_unit, Gauge.time_units.keys, {},
+          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@gauge.errors[:time_unit].any? ? 'border-red-300' : ''}",
+          data: { modal_target: "timeUnit", action: "change->modal#updateEndDate"}
+        - if @gauge.errors[:time_unit].any?
+          .text-red-600.text-xs.mt-1= @gauge.errors[:time_unit].join(', ')
+
+      .flex.justify-end.space-x-3
+        = link_to 'Cancel', gauges_path, 
+                  class: "inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+                  data: { action: "modal#close" }
+        = f.submit "Create Gauge", class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

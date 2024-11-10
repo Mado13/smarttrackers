@@ -1,0 +1,16 @@
+div[id="gauge_#{gauge.id}"]
+  .gauge-item.mb-4
+    .bg-white.shadow.rounded-lg.p-6
+      .flex.justify-between.items-center
+        h3.text-lg.font-semibold= gauge.name
+        .text-sm.text-gray-500= gauge.unit
+      .mt-2.grid.grid-cols-2.gap-4
+        .col-span-1
+          p.text-sm.text-gray-600 Start Date
+          p.font-medium= gauge.start_date.strftime("%B %d, %Y")
+        .col-span-1
+          p.text-sm.text-gray-600 End Date
+          p.font-medium= gauge.end_date.strftime("%B %d, %Y")
+        .col-span-2
+          p.text-sm.text-gray-600 Time Unit
+          p.font-medium.capitalize= gauge.time_unit
