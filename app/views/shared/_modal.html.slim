@@ -1,0 +1,15 @@
+.fixed.inset-0.overflow-y-auto.flex.items-center.justify-center.hidden[
+  data-controller="base-modal"
+  data-action="keyup@window->base-modal#closeWithKeyboard click@window->base-modal#closeBackground turbo:before-render@window->base-modal#close"
+  style="z-index: 50"
+]
+  .fixed.inset-0.transition-opacity
+    .absolute.inset-0.bg-gray-500.opacity-75[data-base-modal-target="overlay"]
+  .bg-white.rounded-lg.overflow-hidden.shadow-xl.transform.transition-all.sm:max-w-lg.w-full.mx-4[
+    role="dialog" 
+    aria-modal="true" 
+    aria-labelledby="modal-headline"
+  ]
+    .px-8.py-6
+      = turbo_frame_tag "modal_content" do
+        = yield
