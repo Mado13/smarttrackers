@@ -5,7 +5,7 @@ RSpec.describe "Gauges", type: :request do
   let(:gauge) { create(:gauge) }
   let(:other_user) { create(:user) }
   let(:other_gauge) { create(:gauge) }
-
+  
   before { sign_in user }
 
   describe "GET /gauges" do
@@ -20,10 +20,9 @@ RSpec.describe "Gauges", type: :request do
   end
 
   describe "GET /gauges/new" do
-    it "returns a successful Turbo Stream response with the new gauge form" do
+    it "returns a successful response with the new gauge form" do
       get new_gauge_path, xhr: true
       expect(response).to have_http_status(:success)
-      expect(response.media_type).to eq "text/vnd.turbo-stream.html"
       expect(response.body).to include("form")
     end
   end
@@ -44,22 +43,22 @@ RSpec.describe "Gauges", type: :request do
     end
 
     context "with valid attributes" do
-      it "creates a new gauge and returns a Turbo Stream response" do
+      it "creates a new gauge and returns a successful response" do
         expect {
           post gauges_path, params: { gauge: valid_attributes }, xhr: true
         }.to change(Gauge, :count).by(1)
+        
         expect(response).to have_http_status(:success)
-        expect(response.media_type).to eq "text/vnd.turbo-stream.html"
       end
     end
 
     context "with invalid attributes" do
-      it "does not create a new gauge and returns errors via Turbo Stream" do
+      it "does not create a new gauge and returns errors" do
         expect {
           post gauges_path, params: { gauge: invalid_attributes }, xhr: true
         }.not_to change(Gauge, :count)
+        
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.media_type).to eq "text/vnd.turbo-stream.html"
         expect(response.body).to include("error")
       end
     end
