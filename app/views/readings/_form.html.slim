@@ -1,0 +1,25 @@
+= form_with model: [@gauge, @reading],
+  class: "w-full space-y-6",
+  data: { controller: "reading-form" } do |f|
+  .space-y-6
+    .field
+      = f.label :date, class: "block text-sm font-medium text-gray-700"
+      = f.date_field :date, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@reading.errors[:date].any? ? 'border-red-300' : ''}"
+      - if @reading.errors[:date].any?
+        .text-red-600.text-xs.mt-1= @reading.errors[:date].join(', ')
+    
+    .field
+      = f.label :value, class: "block text-sm font-medium text-gray-700"
+      .flex.items-center.space-x-2
+        = f.number_field :value, step: :any, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm #{@reading.errors[:value].any? ? 'border-red-300' : ''}"
+        span.text-sm.text-gray-500= @gauge.unit
+      - if @reading.errors[:value].any?
+        .text-red-600.text-xs.mt-1= @reading.errors[:value].join(', ')
+    
+    .flex.justify-end.space-x-3
+      button[type="button" 
+        data-action="base-modal#close"
+        class="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"]
+        | Cancel
+      = f.submit @reading.persisted? ? "Save Changes" : "Create Reading", 
+        class: "inline-flex justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

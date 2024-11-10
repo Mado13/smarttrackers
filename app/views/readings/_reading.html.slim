@@ -1,0 +1,8 @@
+tr id="reading_#{reading.id}"
+  td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-500
+    = reading.date.strftime('%Y-%m-%d')
+  td.px-6.py-4.whitespace-nowrap.text-sm.text-gray-900
+    = reading.value
+  = render 'readings/approval_status', reading: reading
+  = render 'readings/actions', reading: reading, gauge: @gauge
+
