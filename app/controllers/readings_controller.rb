@@ -5,7 +5,7 @@ class ReadingsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_gauge
-  before_action :set_reading, only: %i[update destroy approve]
+  before_action :set_reading, only: %i[edit update destroy approve]
   before_action :authorize_employee!, only: %i[new create]
   before_action :authorize_manager!, only: [:approve]
 
@@ -13,6 +13,8 @@ class ReadingsController < ApplicationController
     @reading = @gauge.readings.build
     render :new
   end
+
+  def edit; end
 
   def create
     @reading = @gauge.readings.build(reading_params)
