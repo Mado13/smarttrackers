@@ -2,12 +2,19 @@
   .flex.justify-between.items-center.mb-6
     h1.text-2xl.font-bold
       | Gauges
-    - if current_user.employee?
-      = link_to new_gauge_path,
-        data: { turbo_frame: "modal_content" },
-        class: "inline-flex gap-4 justify-center items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" do
-        = lucide_icon('square-plus')
-        | New gauge
+    .flex.items-center.space-x-2
+      = button_to destroy_user_session_path, 
+        method: :delete,
+        class: "inline-flex gap-2 items-center px-3 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500",
+        data: { turbo_frame: "_top" } do
+        = lucide_icon("log-out")
+        | Logout 
+      - if current_user.employee?
+        = link_to new_gauge_path,
+          data: { turbo_frame: "modal_content" },
+          class: "inline-flex gap-4 justify-center items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" do
+          = lucide_icon('square-plus')
+          | New gauge
   
   / Gauges List
   .grid[
