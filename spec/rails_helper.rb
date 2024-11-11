@@ -50,6 +50,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::IntegrationHelpers, type: :system
 
   config.before(:each, type: :feature) do
     Capybara.current_driver = :selenium_chrome_headless
